@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.google.gms:google-services:4.0.1'
+    }
+}
+repositories {
+    mavenCentral()
+	google()    
+    jcenter()
+  	flatDir {
+      dirs 'libs'
+    }
+}
+
+dependencies {
+   compile 'com.android.support:support-v4:+'
+   compile(name:'BGLocationSenderLib', ext:'aar')
+   compile 'com.google.android.gms:play-services-location:+'
+   compile 'com.google.firebase:firebase-auth:+'              // Firebase Authentication
+   compile 'com.google.firebase:firebase-database:+'          // Firebase Database
+}
+
+android {
+  packagingOptions {
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/LICENSE'
+  }
+}
+//apply plugin: 'com.google.gms.google-services'

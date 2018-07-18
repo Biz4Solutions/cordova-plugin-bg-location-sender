@@ -1,0 +1,23 @@
+{
+  "name": "cordova-plugin-bg-location-sender",
+  "version": "2.0.0",
+  "description": "This plug-in is used to get and to send user location to the server with custom parameters.",
+  "cordova": {
+    "id": "cordova-plugin-bg-location-sender",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+	"background-location",
+	"bg-location-sender",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": {
+    "name": "Biz4solutions Pvt. Ltd(www.biz4solutions.com)"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-bg-location-sender" version="2.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>BGLocationSender</name>
+	<js-module name="BGLocationSender" src="www/BGLocationSender.js">
+		<clobbers target="cordova.plugins.BGLocationSender" />
+	</js-module>
+	<platform name="android">
+		<config-file target="AndroidManifest.xml" parent="/*">
+            <uses-feature android:name="android.hardware.location.gps" />
+        </config-file>
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="BGLocationSender">
+				<param name="android-package" value="com.plugin.BGLocationSender.BGLocationSender" />
+				<param name="onload" value="true" />
+			</feature>
+		</config-file>
+		
+		<config-file parent="/resources" target="res/values/strings.xml">
+			<string name="google_app_id">@string/google_app_id</string>
+		</config-file>
+		<config-file parent="/resources" target="res/values/strings.xml">
+			<string name="google_api_key">@string/google_api_key</string>
+		</config-file>
+		<resource-file src="src/android/google-services.json" target="."/>
+		<framework src="src/android/bgls.gradle" custom="true" type="gradleReference" />
+		<source-file src="src/android/BGLocationSender.java" target-dir="src/com/plugin/BGLocationSender" />
+		<source-file src="src/android/libs/BGLocationSenderLib.aar" target-dir="libs" />
+	</platform>
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="BGLocationSender">
+				<param name="ios-package" value="BGLocationSender" />
+				<param name="onload" value="true" />
+			</feature>
+		</config-file>
+		<resource-file src="src/ios/GoogleService-Info.plist" />
+		<header-file src="src/ios/AppDelegate+FirebasePlugin.h" />
+		<source-file src="src/ios/AppDelegate+FirebasePlugin.m" />
+		<header-file src="src/ios/FirebasePlugin.h" />
+		<source-file src="src/ios/FirebasePlugin.m" />
+		<source-file src="src/ios/BGLocationSender.m" />
+		<source-file src="src/ios/BGLocationSender.h" />
+		<source-file src="src/ios/ConnectionManager.h" />
+		<source-file src="src/ios/ConnectionManager.m" />
+		<header-file src="src/ios/Firebase/Firebase.h" />
+		<framework src="CoreLocation.framework" weak="true" />
+		<framework custom="true" src="src/ios/Firebase/Analytics/FirebaseAnalytics.framework" />
+		<framework custom="true" src="src/ios/Firebase/Analytics/FirebaseCore.framework" />
+		<framework custom="true" src="src/ios/Firebase/Analytics/FirebaseCoreDiagnostics.framework" />
+		<framework custom="true" src="src/ios/Firebase/Analytics/FirebaseInstanceID.framework" />
+		<framework custom="true" src="src/ios/Firebase/Analytics/FirebaseNanoPB.framework" />
+		<framework custom="true" src="src/ios/Firebase/Analytics/GoogleToolboxForMac.framework" />
+		<framework custom="true" src="src/ios/Firebase/Analytics/nanopb.framework" />
+		<framework custom="true" src="src/ios/Firebase/Messaging/Protobuf.framework" />
+		<framework custom="true" src="src/ios/Firebase/Messaging/FirebaseMessaging.framework" />
+		<framework custom="true" src="src/ios/Firebase/Crash/FirebaseCrash.framework" />
+		<framework custom="true" src="src/ios/Firebase/RemoteConfig/FirebaseRemoteConfig.framework" />
+		<framework custom="true" src="src/ios/Firebase/RemoteConfig/FirebaseABTesting.framework" />
+		<framework custom="true" src="src/ios/Firebase/Auth/FirebaseAuth.framework" />
+		<framework custom="true" src="src/ios/Firebase/Auth/GTMSessionFetcher.framework" />
+		<framework custom="true" src="src/ios/Firebase/Performance/FirebasePerformance.framework" />
+		<framework custom="true" src="src/ios/Firebase/Performance/FirebaseISASwizzler.framework" />
+		<framework custom="true" src="src/ios/Firebase/Performance/FirebaseMethodSwizzler.framework" />
+		<framework custom="true" src="src/ios/Firebase/Database/FirebaseDatabase.framework" />
+		<framework custom="true" src="src/ios/Firebase/Database/leveldb-library.framework" />
+	</platform>
+	<hook src="scripts/after_prepare.js" type="after_prepare" />
+</plugin>
