@@ -19,5 +19,13 @@
   "author": {
     "name": "Biz4solutions Pvt. Ltd(www.biz4solutions.com)"
   },
+  "bugs": {
+    "url": "https://github.com/Biz4Solutions/cordova-plugin-bg-location-sender/issues"
+  },
+  "homepage": "https://github.com/Biz4Solutions/cordova-plugin-bg-location-sender",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Biz4Solutions/cordova-plugin-bg-location-sender.git"
+  },
   "license": "MIT"
 }
