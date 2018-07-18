@@ -62,7 +62,7 @@
             [self sendResponse : CDVCommandStatus_ERROR  messageString: @"Missing locationSendIntervalTime"];
         }
         //-------Send data to Firebase-----------
-        else if ([[argumentsData objectForKey:@"dbName"] isEqualToString:@"FIREBASE"]) {
+        else if ([[argumentsData objectForKey:@"storeType"] isEqualToString:@"FIREBASE"]) {
             if (!([argumentsData objectForKey:@"firebaseEmail"]) || (([argumentsData objectForKey:@"firebaseEmail"]) && ([[argumentsData objectForKey:@"firebaseEmail"] isKindOfClass:[NSNull class]] ||
                                                                                                                          [[argumentsData objectForKey:@"firebaseEmail"] isEqual:nil] || [[argumentsData valueForKey:@"firebaseEmail"] isEqualToString:@""])))
             {
@@ -91,7 +91,11 @@
                                          if ( error == nil) {
                                              FIRUser *user = [FIRAuth auth].currentUser;
                                              if (user) {
-                                                 [self sendResponse : CDVCommandStatus_OK  messageString: @"BGLocationSender started successfully"];
+                                                 NSMutableDictionary *requestSuccessDict = [[NSMutableDictionary alloc]init];
+                                                 [requestSuccessDict setObject:@"BGLocationSender started successfully" forKey:@"message"];
+                                                 CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK  messageAsDictionary:requestSuccessDict];
+                                                 [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+                                                 [self.commandDelegate sendPluginResult:pluginResult callbackId:callBackID];
                                                  ref = [[FIRDatabase database] reference];
                                                  [self initLocationManager];
                                              }
@@ -103,8 +107,11 @@
                                                                           if ( error == nil) {
                                                                               FIRUser *user = [FIRAuth auth].currentUser;
                                                                               if (user) {
-                                                                                  [self sendResponse : CDVCommandStatus_OK  messageString: @"BGLocationSender started successfully"];
-                                                                                  ref = [[FIRDatabase database] reference];
+                                                                                  NSMutableDictionary *requestSuccessDict = [[NSMutableDictionary alloc]init];
+                                                                                  [requestSuccessDict setObject:@"BGLocationSender started successfully" forKey:@"message"];
+                                                                                  CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK  messageAsDictionary:requestSuccessDict];
+                                                                                  [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+                                                                                  [self.commandDelegate sendPluginResult:pluginResult callbackId:callBackID];                                                                             ref = [[FIRDatabase database] reference];
                                                                                   [self initLocationManager];
                                                                               }
                                                                           } else {
@@ -116,7 +123,7 @@
             }
             //-------Send data to backend server-----------
             
-        } else if ([[argumentsData objectForKey:@"dbName"] isEqualToString:@"BACKEND"]) {
+        } else if ([[argumentsData objectForKey:@"storeType"] isEqualToString:@"BACKEND"]) {
             if ( ([[argumentsData objectForKey:@"url"] isKindOfClass:[NSNull class]] ||
                   [[argumentsData objectForKey:@"url"] isEqual:nil] ||
                   [[argumentsData objectForKey:@"url"] isEqualToString:@""]))
@@ -131,12 +138,20 @@
             }
             else
             {
-                [self sendResponse : CDVCommandStatus_OK  messageString: @"BGLocationSender started successfully"];
+                NSMutableDictionary *requestSuccessDict = [[NSMutableDictionary alloc]init];
+                [requestSuccessDict setObject:@"BGLocationSender started successfully" forKey:@"message"];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK  messageAsDictionary:requestSuccessDict];
+                [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:callBackID];
                 [self initLocationManager];
             }
             //-------Send data to frontend server-----------
         } else {
-            [self sendResponse : CDVCommandStatus_OK  messageString: @"BGLocationSender started successfully"];
+            NSMutableDictionary *requestSuccessDict = [[NSMutableDictionary alloc]init];
+            [requestSuccessDict setObject:@"BGLocationSender started successfully" forKey:@"message"];
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK  messageAsDictionary:requestSuccessDict];
+            [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:callBackID];
             [self initLocationManager];
         }
     } @catch (NSException *exception) {
@@ -217,7 +232,7 @@
         [requestDict setObject:longitude forKey:@"longitude"];
         if ([argumentsData count]) {
             //-------Send data to firebase server-----------
-            if ([[argumentsData objectForKey:@"dbName"] isEqualToString:@"FIREBASE"]) {
+            if ([[argumentsData objectForKey:@"storeType"] isEqualToString:@"FIREBASE"]) {
                 if ((![[requestDict objectForKey:@"latitude"] isKindOfClass:[NSNull class]] || ![[requestDict objectForKey:@"latitude"] isEqual:nil])) {
                     if ([argumentsData objectForKey:@"params"]) {
                         NSMutableDictionary *requestFirebaseDict = [[NSMutableDictionary alloc]init];
@@ -237,7 +252,7 @@
                     [self sendResponse : CDVCommandStatus_ERROR  messageString: @"Location not found"];
                 }
                 //-------Send data to BACKEND server-----------
-            } else if([[argumentsData objectForKey:@"dbName"] isEqualToString:@"BACKEND"]){
+            } else if([[argumentsData objectForKey:@"storeType"] isEqualToString:@"BACKEND"]){
                 if ((![[argumentsData objectForKey:@"params"] isKindOfClass:[NSNull class]] || ![[argumentsData objectForKey:@"params"] isEqual:nil])) {
                     [requestDict addEntriesFromDictionary:[argumentsData objectForKey:@"params"]];
                 }
@@ -319,7 +334,7 @@
             [self sendResponse : CDVCommandStatus_ERROR  messageString: @"Missing locationSendIntervalTime"];
         }
         //-------Send data to Firebase-----------
-        else if ([[getArgumentsData objectForKey:@"dbName"] isEqualToString:@"FIREBASE"]) {
+        else if ([[getArgumentsData objectForKey:@"storeType"] isEqualToString:@"FIREBASE"]) {
             if (!([getArgumentsData objectForKey:@"firebaseEmail"]) || (([getArgumentsData objectForKey:@"firebaseEmail"]) && ([[getArgumentsData objectForKey:@"firebaseEmail"] isKindOfClass:[NSNull class]] ||
                                                                                                                                [[getArgumentsData objectForKey:@"firebaseEmail"] isEqual:nil] || [[getArgumentsData valueForKey:@"firebaseEmail"] isEqualToString:@""])))
             {
@@ -340,12 +355,16 @@
             {
                 [self sendResponse : CDVCommandStatus_ERROR  messageString: @"Missing Firebase DB Refrance Key"];
             } else {
-                [self sendResponse : CDVCommandStatus_OK  messageString: @"BGLocationSender updated successfully"];
                 argumentsData = [[command.arguments objectAtIndex:0] mutableCopy];
+                NSMutableDictionary *requestSuccessDict = [[NSMutableDictionary alloc]init];
+                [requestSuccessDict setObject:@"BGLocationSender updated successfully" forKey:@"message"];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK  messageAsDictionary:requestSuccessDict];
+                [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:callBackID];
             }
             //-------Send data to backend server-----------
             
-        } else if ([[getArgumentsData objectForKey:@"dbName"] isEqualToString:@"BACKEND"]) {
+        } else if ([[getArgumentsData objectForKey:@"storeType"] isEqualToString:@"BACKEND"]) {
             if ( ([[getArgumentsData objectForKey:@"url"] isKindOfClass:[NSNull class]] ||
                   [[getArgumentsData objectForKey:@"url"] isEqual:nil] ||
                   [[getArgumentsData objectForKey:@"url"] isEqualToString:@""]))
@@ -360,13 +379,21 @@
             }
             else
             {
-                [self sendResponse : CDVCommandStatus_OK  messageString: @"BGLocationSender updated successfully"];
                 argumentsData = [[command.arguments objectAtIndex:0] mutableCopy];
+                NSMutableDictionary *requestSuccessDict = [[NSMutableDictionary alloc]init];
+                [requestSuccessDict setObject:@"BGLocationSender updated successfully" forKey:@"message"];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK  messageAsDictionary:requestSuccessDict];
+                [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:callBackID];
             }
             //-------Send data to frontend server-----------
         } else {
-            [self sendResponse : CDVCommandStatus_OK  messageString: @"BGLocationSender updated successfully"];
             argumentsData = [[command.arguments objectAtIndex:0] mutableCopy];
+            NSMutableDictionary *requestSuccessDict = [[NSMutableDictionary alloc]init];
+            [requestSuccessDict setObject:@"BGLocationSender updated successfully" forKey:@"message"];
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK  messageAsDictionary:requestSuccessDict];
+            [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:callBackID];
         }
     }
     @catch (NSException *exception) {
@@ -403,6 +430,7 @@
 }
 
 @end
+
 
 
 

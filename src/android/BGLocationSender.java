@@ -79,8 +79,8 @@ public class BGLocationSender extends CordovaPlugin {
 					callbackContext.error("Missing locationSendIntervalTime");
 					return;
 				}
-				if (paramsObject.getString("dbName") != null) {
-					if (paramsObject.getString("dbName").equalsIgnoreCase("FIREBASE")) {
+				if (paramsObject.getString("storeType") != null) {
+					if (paramsObject.getString("storeType").equalsIgnoreCase("FIREBASE")) {
 						if (parameterObject.getString("url") == null || parameterObject.getString("url").equals("")) {
 							callbackContext.error("Missing Firebase Url");
 							return;
@@ -101,7 +101,7 @@ public class BGLocationSender extends CordovaPlugin {
 							callbackContext.error("Missing Firebase DB Refrance Key");
 							return;
 						}
-					} else if (paramsObject.getString("dbName").equalsIgnoreCase("BACKEND")) {
+					} else if (paramsObject.getString("storeType").equalsIgnoreCase("BACKEND")) {
 						if (parameterObject.getString("url") == null || parameterObject.getString("url").equals("")) {
 							callbackContext.error("Missing url");
 							return;
@@ -114,7 +114,7 @@ public class BGLocationSender extends CordovaPlugin {
 				}
 
 				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("message", "BGLocationSender start successfully");
+				jsonObj.put("message", "BGLocationSender started successfully");
 				callbackContext.success(jsonObj);
 
 				storeStringPreference(this.cordova.getActivity(), paramsObject.toString());
@@ -125,8 +125,8 @@ public class BGLocationSender extends CordovaPlugin {
 					} else {
 						this.cordova.getActivity().startForegroundService(intent);
 					}
-					if (paramsObject.getString("dbName") == null || paramsObject.getString("dbName").equals("")
-							|| paramsObject.getString("dbName").equalsIgnoreCase("FRONTEND")) {
+					if (paramsObject.getString("storeType") == null || paramsObject.getString("storeType").equals("")
+							|| paramsObject.getString("storeType").equalsIgnoreCase("FRONTEND")) {
 						ForegroundService.setCallBackListener(new CallBackListener<JSONObject>() {
 							@Override
 							public void onLocationChanged(JSONObject result) {
@@ -212,9 +212,9 @@ public class BGLocationSender extends CordovaPlugin {
 				callbackContext.error("Missing locationSendIntervalTime");
 				return;
 			}
-			if (updatedParamsObject.getString("dbName") != null) {
+			if (updatedParamsObject.getString("storeType") != null) {
 				JSONObject updatedParameterObject = paramsObject.getJSONObject("parameters");
-				if (updatedParamsObject.getString("dbName").equalsIgnoreCase("FIREBASE")) {
+				if (updatedParamsObject.getString("storeType").equalsIgnoreCase("FIREBASE")) {
 					if (updatedParameterObject.getString("url") == null || updatedParameterObject.getString("url").equals("")) {
 						callbackContext.error("Missing Firebase Url");
 						return;
@@ -235,7 +235,7 @@ public class BGLocationSender extends CordovaPlugin {
 						callbackContext.error("Missing Firebase DB Refrance Key");
 						return;
 					}
-				} else if (updatedParamsObject.getString("dbName").equalsIgnoreCase("BACKEND")) {
+				} else if (updatedParamsObject.getString("storeType").equalsIgnoreCase("BACKEND")) {
 					if (updatedParameterObject.getString("url") == null || updatedParameterObject.getString("url").equals("")) {
 						callbackContext.error("Missing url");
 						return;
@@ -247,7 +247,9 @@ public class BGLocationSender extends CordovaPlugin {
 				}
 			}
 			paramsObject = updatedParamsObject;
-			callbackContext.success("BGLocationSender Update Params successfully");
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("message", "BGLocationSender updated successfully");
+			callbackContext.success(jsonObj);
 			storeStringPreference(this.cordova.getActivity(), updatedParamsObject.toString());
 		} catch (Exception e) {
 			callbackContext.error("" + e);
