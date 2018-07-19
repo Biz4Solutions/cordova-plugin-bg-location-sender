@@ -1,11 +1,12 @@
 # Background Location Save
-	
 	This plugin is used to store users geo location to a data store when an ionic app is running in the background.
 	Data store can be a backend API, firebase or for frontend use it as a location watcher
 	
 ## Installation
-
+	```
 	ionic cordova plugin add cordova-plugin-bg-location-sender --save
+	npm install --save @ionic-native/bg-location-sender 
+	```
 	
 ## Supported Cordova Versions
 	- cordova: `>= 6`
@@ -44,73 +45,69 @@
 
 #### Example
 	
-##### declare cordova
-	declare cordova in your ts -- above Component.
+##### import BGLocationSender and add in constructor
+	import { BGLocationSender, BGLocationSenderOptions } from '@ionic-native/bg-location-sender';
 	
-	import .... 
-	declare var cordova: any;
-	@Component( {
-		....
-	})
+	constructor( private bgls:BGLocationSender){
+	}
 	
 ##### How to call
 
 	-------------------------------------------------------------
 	storeType BACKEND
 	-------------------------------------------------------------
-	let params = {
-		"storeType": "BACKEND",
-		"parameters": {
-			"url": "https://../updatePosition"
-			"methodType": "POST",
-			"header": {
+	let params: BGLocationSenderOptions = {
+		storeType: "BACKEND",
+		parameters: {
+			url: "https://../updatePosition"
+			methodType: "POST",
+			header: {
 				"key": "value" 		// Optional //add your all header with key value.
 			},
-			"notificationTitle":"", // Optional
-			"notificationText":""   // Optional
+			notificationTitle:"", 	// Optional
+			notificationText:""   	// Optional
 		},
-        "params": {
+        params: {
             "key": "value" 			// Optional //add your all body params with key value. This body params is store in db with lat long.
         },
-        "locationSendIntervalTime": 5000
+        locationSendIntervalTime: 5000
     }
 
 	-------------------------------------------------------------
 	storeType FIREBASE
 	-------------------------------------------------------------
-	let params = {
-		"storeType": "FIREBASE",
-		"parameters": {
-			"url": "https://xyz.firebaseio.com"
-			"firebaseEmail":"",
-			"firebasePassword":"",
-			"firebaseDBName":"",
-			"firebaseDBKey":"",
-			"notificationTitle":"", // Optional
-			"notificationText":"" 	// Optional
+	let params: BGLocationSenderOptions = {
+		storeType: "FIREBASE",
+		parameters: {
+			url: "https://xyz.firebaseio.com"
+			firebaseEmail:"",
+			firebasePassword:"",
+			firebaseDBName:"",
+			firebaseDBKey:"",
+			notificationTitle:"", 	// Optional
+			notificationText:"" 	// Optional
 		},
-        "params": {
+        params: {
             "key": "value"  		// Optional //add your all body params with key value. This body params is store in db with lat long.
         },
-        "locationSendIntervalTime": 5000
+        locationSendIntervalTime: 5000
     }
    
     -------------------------------------------------------------
 	storeType FRONTEND
 	-------------------------------------------------------------
-	let params = {
-		"storeType": "FRONTEND",
-		"parameters": {
-			"notificationTitle":"", // Optional
-			"notificationText":""   // Optional
+	let params: BGLocationSenderOptions = {
+		storeType: "FRONTEND",
+		parameters: {
+			notificationTitle:"", 	// Optional
+			notificationText:""   	// Optional
 		},
-        "locationSendIntervalTime": 5000
+        locationSendIntervalTime: 5000
     }
 	
-	
-	cordova.plugins.BGLocationSender.start(params,
-	(s)=>{console.log("aa --------- s=",s);},
-	(e)=>{console.log("aa --------- error=",e);});
+	this.bgls.start(params).subscribe( values => {
+	   console.log("aa ---------- values=",values);
+    });
 	
 	
 # Add keys into plist for iOS

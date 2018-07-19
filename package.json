@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-bg-location-sender",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "This plug-in is used to store users geo location to a data store when an ionic app is running in the background. Data store can be a backend API, firebase or for frontend use it as a location watcher.",
   "cordova": {
     "id": "cordova-plugin-bg-location-sender",
@@ -21,7 +21,7 @@
     "cordova-ios"
   ],
   "author": {
-    "name": "Biz4solutions Pvt. Ltd(https://biz4solutions.com/)"
+    "name": "Biz4solutions Pvt. Ltd.(https://biz4solutions.com/)"
   },
   "bugs": {
     "url": "https://github.com/Biz4Solutions/cordova-plugin-bg-location-sender/issues"

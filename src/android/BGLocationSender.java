@@ -3,6 +3,7 @@ package com.plugin.BGLocationSender;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PermissionHelper;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +34,8 @@ public class BGLocationSender extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		try {
+			System.out.println("aa ----------BGLocationSender java action="+action);
+			System.out.println("aa ----------BGLocationSender java action="+args.toString());
 			this.callbackContext = callbackContext;
 			if (action == null) {
 				return false;
@@ -115,7 +118,9 @@ public class BGLocationSender extends CordovaPlugin {
 
 				JSONObject jsonObj = new JSONObject();
 				jsonObj.put("message", "BGLocationSender started successfully");
-				callbackContext.success(jsonObj);
+				PluginResult pluginresult = new PluginResult(PluginResult.Status.OK, jsonObj);
+	            pluginresult.setKeepCallback(true);
+	            callbackContext.sendPluginResult(pluginresult);
 
 				storeStringPreference(this.cordova.getActivity(), paramsObject.toString());
 				Intent intent = new Intent(this.cordova.getActivity(), ForegroundService.class);
@@ -131,7 +136,9 @@ public class BGLocationSender extends CordovaPlugin {
 							@Override
 							public void onLocationChanged(JSONObject result) {
 								if(callbackContext != null){
-									callbackContext.success(result);
+									PluginResult pluginresult = new PluginResult(PluginResult.Status.OK, result);
+						            pluginresult.setKeepCallback(true);
+						            callbackContext.sendPluginResult(pluginresult);
 								}
 							}
 						});
@@ -153,7 +160,7 @@ public class BGLocationSender extends CordovaPlugin {
 	private void stopService(CallbackContext callbackContext) {
 		try {
 			this.cordova.getActivity().stopService(new Intent(this.cordova.getActivity(), ForegroundService.class));
-			callbackContext.success("BGLocationSender stopService successfully");
+			//callbackContext.success("BGLocationSender stopService successfully");
 		} catch (Exception e) {
 			callbackContext.error("" + e);
 			System.out.println("aa -BGLocationSender- stopService Exception=" + e);
