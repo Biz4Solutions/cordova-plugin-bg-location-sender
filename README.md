@@ -1,6 +1,7 @@
 # Background Location Save
 	This plugin is used to store users geo location to a data store when an ionic app is running in the background.
 	Data store can be a backend API, firebase or for frontend use it as a location watcher
+	Supported upto Android Oreo(8.1.0) and iOS 11.4.1
 	
 ## Installation
 	$ ionic cordova plugin add cordova-plugin-bg-location-sender --save
@@ -12,7 +13,9 @@
 	- cordova-ios: `>= 4`
 	
 ### Setup
-	Download your Firebase configuration files, GoogleService-Info.plist for ios and google-services.json for android, and place them in the root folder of your cordova project.  Check out this [firebase article](https://support.google.com/firebase/answer/7015592) for details on how to download the files.
+	Download your Firebase configuration files, GoogleService-Info.plist for ios and google-services.json for android,
+	and place them in the root folder of your cordova project.
+	Check out this [firebase article](https://support.google.com/firebase/answer/7015592) for details on how to download the files.
 
 	```
 	- My Project/
@@ -33,7 +36,9 @@
 	Hooks do not work with PhoneGap Build. This means you will have to manually make sure the configuration files are included. One way to do that is to make a private fork of this plugin and replace the placeholder config files (see `src/ios` and `src/android`) with your actual ones, as well as hard coding your app id and api key in `plugin.xml`.
 
 ### Google Play Services
-	Your build may fail if you are installing multiple plugins that use Google Play Services.  This is caused by the plugins installing different versions of the Google Play Services library.  This can be resolved by installing [cordova-android-play-services-gradle-release](https://github.com/dpa99c/cordova-android-play-services-gradle-release).
+	Your build may fail if you are installing multiple plugins that use Google Play Services.
+	This is caused by the plugins installing different versions of the Google Play Services library.
+	This can be resolved by installing [cordova-android-play-services-gradle-release](https://github.com/dpa99c/cordova-android-play-services-gradle-release).
 
 ### Methods
 	1) start - use to start location watcher to store location.
