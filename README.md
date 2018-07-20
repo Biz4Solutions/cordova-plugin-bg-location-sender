@@ -3,10 +3,8 @@
 	Data store can be a backend API, firebase or for frontend use it as a location watcher
 	
 ## Installation
-	```
-	ionic cordova plugin add cordova-plugin-bg-location-sender --save
-	npm install --save @ionic-native/bg-location-sender 
-	```
+	$ ionic cordova plugin add cordova-plugin-bg-location-sender --save
+	$ npm install --save bg-location-sender
 	
 ## Supported Cordova Versions
 	- cordova: `>= 6`
@@ -46,7 +44,7 @@
 #### Example
 	
 ##### import BGLocationSender and add in constructor
-	import { BGLocationSender, BGLocationSenderOptions } from '@ionic-native/bg-location-sender';
+	import { BGLocationSender, BGLocationSenderOptions } from 'bg-location-sender';
 	
 	constructor( private bgls:BGLocationSender){
 	}
