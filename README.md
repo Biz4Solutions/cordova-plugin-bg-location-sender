@@ -35,7 +35,7 @@
 ### Google Play Services
 	Your build may fail if you are installing multiple plugins that use Google Play Services.  This is caused by the plugins installing different versions of the Google Play Services library.  This can be resolved by installing [cordova-android-play-services-gradle-release](https://github.com/dpa99c/cordova-android-play-services-gradle-release).
 
-### Methodes
+### Methods
 	1) start - use to start location watcher to store location.
 	2) stop - use to stop location watcher.
 	3) updateParams - use to update params when location watcher is start.
