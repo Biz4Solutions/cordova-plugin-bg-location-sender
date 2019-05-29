@@ -5,6 +5,9 @@
 	
 ## Installation
 	$ ionic cordova plugin add cordova-plugin-bg-location-sender --save
+				or
+	$ ionic cordova plugin add https://github.com/Biz4Solutions/cordova-plugin-bg-location-sender.git --save
+	
 	$ npm install --save bg-location-sender
 	
 ## Supported Cordova Versions
